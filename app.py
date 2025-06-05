@@ -10,12 +10,12 @@ from calculator_engine.calculator import calcular_total_horas_noturnas
 from calculator_engine.calculator import calcular_total_gozo_ferias
 
 st.set_page_config(
-    page_title="Calculador Automático de Horas🧮",
+    page_title="Calculador Automático de Horas 🧮",
     page_icon="🧮",
     layout="wide",
 )
 
-st.title("Calculador Automático de Horas🧮")
+st.title("Calculador Automático de Horas 🧮")
 
 st.write(
     "Esta app permite a execução automática de Horas através do report de detalhes salariais do Tamigo"
