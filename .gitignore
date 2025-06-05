@@ -1,3 +1,17 @@
+**/__pycache__/
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
 .venv/
+venv/
+
 .streamlit/
+
+.ipynb_checkpoints/
+
+.vscode/
+
+.DS_Store
