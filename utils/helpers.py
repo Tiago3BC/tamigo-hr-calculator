@@ -6,6 +6,7 @@ def convert_to_float(value):
         return float(value.replace(",", "."))
     return value
 
+
 def get_employee_names(filepath_or_file):
     names = []
     try:
@@ -24,6 +25,7 @@ def get_employee_names(filepath_or_file):
 
     return names
 
+
 def get_departments(filepath_or_file):
     departments = []
     try:
@@ -41,6 +43,7 @@ def get_departments(filepath_or_file):
         return []
 
     return departments
+
 
 def get_sub_almocos(filepath_or_file, nomes_disponiveis=None):
     sub_almocos = []
@@ -61,6 +64,7 @@ def get_sub_almocos(filepath_or_file, nomes_disponiveis=None):
         return []
     return sub_almocos
 
+
 def get_horas_noturnas(filepath_or_file, nomes_disponiveis=None):
     horas_noturnas = []
     try:
@@ -79,6 +83,7 @@ def get_horas_noturnas(filepath_or_file, nomes_disponiveis=None):
         print(f"Erro ao abrir o ficheiro Excel: {e}")
         return []
     return horas_noturnas
+
 
 def get_gozo_ferias(filepath_or_file, nomes_disponiveis=None):
     gozo_ferias = []

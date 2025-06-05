@@ -4,6 +4,7 @@ import numpy as np
 import altair as alt
 import time
 import random
+from pathlib import Path
 from utils.helpers import get_employee_names
 from calculator_engine.calculator import calcular_total_sub_almocos
 from calculator_engine.calculator import calcular_total_horas_noturnas
@@ -23,9 +24,9 @@ st.write(
 
 with st.sidebar:
     st.logo(
-    "Logos/quake_horizontal.png",
-    size = "medium",
-    icon_image = "Logos/quake_vertical.png",
+        Path("Logos/quake_horizontal.png"),
+        size="medium",
+        icon_image=Path("Logos/quake_vertical.png")
     )
 
     uploaded_file = st.file_uploader(
@@ -35,8 +36,8 @@ with st.sidebar:
     if uploaded_file is None:
         st.sidebar.warning("Importar um ficheiro do Tamigo", icon="⚠️")
     else:
-        with st.spinner("A carregar dados...", show_time = True):
-            time.sleep(random.randint(1,2))
+        with st.spinner("A carregar dados...", show_time=True):
+            time.sleep(random.randint(1, 2))
         try:
             st.sidebar.success("Dados importados corretamente, Sra. Ângela!✅")
             st.write("Número de Colaboradores: ")
@@ -44,7 +45,10 @@ with st.sidebar:
             st.write("Número de Colaboradores: ")
 
         except Exception as e:
-            st.sidebar.error("Ocorreu um erro ao importar o ficheiro. Verifique o formato e tente novamente.", icon="🚨")
+            st.sidebar.error(
+                "Ocorreu um erro ao importar o ficheiro. Verifique o formato e tente novamente.",
+                icon="🚨",
+            )
             st.sidebar.caption(f"Erro técnico: {str(e)}")
 
 if uploaded_file is not None:
@@ -54,7 +58,7 @@ if uploaded_file is not None:
         "Colaboradores",
         (names),
         placeholder="Escolha o(s) colaborador(es)",
-        default = names
+        default=names,
     )
 
     coluna_sub_almoco, coluna_horas_noturnas, coluna_gozo_ferias = st.columns(3)
@@ -64,7 +68,9 @@ if uploaded_file is not None:
         st.metric("Total de subsídios de almoço 🍽️", f"{total_sub_almoco:.2f} uni")
 
     with coluna_horas_noturnas:
-        total_horas_noturnas = calcular_total_horas_noturnas(uploaded_file, Colaboradores)
+        total_horas_noturnas = calcular_total_horas_noturnas(
+            uploaded_file, Colaboradores
+        )
         st.metric("Total de horas noturnas 🌙", f"{total_horas_noturnas:.2f} horas")
 
     with coluna_gozo_ferias:
@@ -84,23 +90,32 @@ if uploaded_file is not None:
         horas.append(hora)
         ferias.append(ferias_gozadas)
 
-    chart_data = pd.DataFrame({
-        "Colaboradores": Colaboradores,
-        "Subsídios de Almoço": almocos,
-        "Horas Noturnas": horas,
-        "Dias de Férias": ferias
-    })
+    chart_data = pd.DataFrame(
+        {
+            "Colaboradores": Colaboradores,
+            "Subsídios de Almoço": almocos,
+            "Horas Noturnas": horas,
+            "Dias de Férias": ferias,
+        }
+    )
 
     data_melted = chart_data.melt("Colaboradores", var_name="Tipo", value_name="Valor")
 
-    chart = alt.Chart(data_melted).mark_bar().encode(
-        x="Valor:Q",
-        y="Colaboradores:N",
-        color=alt.Color("Tipo:N", scale=alt.Scale(
-            domain=["Subsídios de Almoço", "Horas Noturnas", "Dias de Férias"],
-            range=["#BAA5FF", "#FFAD66", "#FFD3A5"]
-        )),
-        tooltip=["Colaboradores", "Tipo", "Valor"]
+    chart = (
+        alt.Chart(data_melted)
+        .mark_bar()
+        .encode(
+            x="Valor:Q",
+            y="Colaboradores:N",
+            color=alt.Color(
+                "Tipo:N",
+                scale=alt.Scale(
+                    domain=["Subsídios de Almoço", "Horas Noturnas", "Dias de Férias"],
+                    range=["#BAA5FF", "#FFAD66", "#FFD3A5"],
+                ),
+            ),
+            tooltip=["Colaboradores", "Tipo", "Valor"],
+        )
     )
 
     st.altair_chart(chart, use_container_width=True)
