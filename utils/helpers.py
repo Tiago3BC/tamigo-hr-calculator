@@ -45,6 +45,36 @@ def get_departments(filepath_or_file):
     return departments
 
 
+def get_unique_departments(filepath_or_file):
+    departments = get_departments(filepath_or_file)
+    unique_departments = list(set(departments))
+    return unique_departments
+
+
+def get_date(filepath_or_file):
+    date = []
+    try:
+        excel_file = pd.ExcelFile(filepath_or_file)
+        for sheet_name in excel_file.sheet_names:
+            df = pd.read_excel(excel_file, sheet_name=sheet_name, header=None)
+            try:
+                date_value = df.iloc[2, 2]
+                date.append(date_value)
+            except Exception as sheet_err:
+                print(f"Erro ao ler B1 da folha '{sheet_name}': {sheet_err}")
+                date.append(None)
+    except Exception as e:
+        print(f"Erro ao abrir o ficheiro Excel: {e}")
+        return []
+    return date
+
+
+def get_unique_date(filepath_or_file):
+    dates = get_date(filepath_or_file)
+    unique_dates = list(set(dates))
+    return unique_dates
+
+
 def get_sub_almocos(filepath_or_file, nomes_disponiveis=None):
     sub_almocos = []
     try:
