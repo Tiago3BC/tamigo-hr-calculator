@@ -138,7 +138,7 @@ if uploaded_file is not None:
                 "Tipo:N",
                 scale=alt.Scale(
                     domain=["Subsídios de Almoço", "Horas Noturnas", "Dias de Férias"],
-                    range=["#BAA5FF", "#FFD3A5", "#FF8A8A"],
+                    range=["#BAA5FF", "#FF8A8A", "#FFD3A5"],
                 ),
             ),
             tooltip=["Colaboradores", "Tipo", "Valor"],
