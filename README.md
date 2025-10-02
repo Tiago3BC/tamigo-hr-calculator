@@ -6,22 +6,22 @@ A Streamlit app to load Excel files, process HR data, and calculate key performa
 
 ```
 streamlit_kpi_app/
-├── .gitattributes              # Git behavior settings for text files, diffing, etc.
-├── .gitignore                  # Files and folders Git should ignore
+├── .gitattributes
+├── .gitignore
 ├── app.py                      # Entry point for the Streamlit app
-├── requirements.txt            # Project dependencies
-├── README.md                   # Project documentation
+├── requirements.txt
+├── README.md
 ├── .streamlit/
-│   └── config.toml             # Streamlit-specific configuration (e.g., theme)
-├── data/                       # Sample or static input files
-│   └── sample_input.xlsx       
-├── kpi_engine/                 # Python package for data processing & KPI calculation
+│   └── config.toml             # Streamlit-specific configuration
+├── data/
+│   └── sample_input.xlsx
+├── calculator_engine/          # Python package for data processing & calculation
 │   ├── __init__.py
-│   └── kpi_calculator.py       # Functions to calculate KPIs
+│   └── calculator.py           # Functions to calc HR metrics
 └── utils/
     ├── __init__.py
-    └── helpers.py              # Reusable helper functions (e.g., formatting)
-````
+    └── helpers.py              # Reusable helper functions
+```
 
 ## Overview
 
@@ -39,7 +39,7 @@ This project provides an interactive web app built with Streamlit that helps HR 
 ```bash
    git clone https://github.com/yourusername/tamigo-hr-calculator.git
    cd tamigo-hr-calculator/streamlit_kpi_app
-````
+```
 
 2. Install dependencies:
 
@@ -51,4 +51,4 @@ This project provides an interactive web app built with Streamlit that helps HR 
 
 ```bash
    streamlit run app.py
-````
+```

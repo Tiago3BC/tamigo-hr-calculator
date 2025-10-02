@@ -16,7 +16,7 @@ st.set_page_config(
     page_title="Calculador Automático de Horas 🧮",
     page_icon="🧮",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 st.title("Calculador Automático de Horas 🧮")
@@ -29,7 +29,7 @@ with st.sidebar:
     st.logo(
         Path("Logos/quake_horizontal.png"),
         size="medium",
-        icon_image=Path("Logos/quake_vertical.png")
+        icon_image=Path("Logos/quake_vertical.png"),
     )
 
     uploaded_file = st.file_uploader(
@@ -42,18 +42,21 @@ with st.sidebar:
         with st.spinner("A carregar dados...", show_time=True):
             time.sleep(random.randint(1, 2))
         try:
-            st.sidebar.success("Dados importados corretamente! Em baixo pode encontrar os campos que selecionou no Tamigo.", icon="✅")
-            
+            st.sidebar.success(
+                "Dados importados corretamente! Em baixo pode encontrar os campos que selecionou no Tamigo.",
+                icon="✅",
+            )
+
             unique_dates = get_unique_date(uploaded_file)
             departamentos_unique = get_unique_departments(uploaded_file)
             colaboradores_unique = get_employee_names(uploaded_file)
-            
+
             sample_data = pd.DataFrame(
-            {
-                "Data": unique_dates,
-                "Departamentos": departamentos_unique,
-                "Colaboradores": len(colaboradores_unique),
-            }
+                {
+                    "Data": unique_dates,
+                    "Departamentos": departamentos_unique,
+                    "Colaboradores": len(colaboradores_unique),
+                }
             )
 
             st.dataframe(sample_data, hide_index=True)
@@ -61,7 +64,7 @@ with st.sidebar:
         except Exception as e:
             st.sidebar.error(
                 "Ocorreu um erro ao importar o ficheiro. Verifique o formato e tente novamente.",
-                icon="🚨"
+                icon="🚨",
             )
             st.sidebar.caption(f"Erro técnico: {str(e)}")
 
@@ -73,7 +76,7 @@ if uploaded_file is not None:
         "Colaboradores",
         (names),
         placeholder="Escolha o(s) colaborador(es)",
-        default=names
+        default=names,
     )
 
     coluna_sub_almoco, coluna_horas_noturnas, coluna_gozo_ferias = st.columns(3)
@@ -83,7 +86,7 @@ if uploaded_file is not None:
             total_sub_almoco = calcular_total_sub_almocos(uploaded_file, Colaboradores)
         else:
             total_sub_almoco = 0
-        
+
         st.metric("Total de subsídios de almoço 🍽️", f"{total_sub_almoco:.2f} uni")
 
     with coluna_horas_noturnas:
@@ -145,6 +148,10 @@ if uploaded_file is not None:
         )
     )
 
-    st.altair_chart(chart, use_container_width=True)
+    if chart_data.empty:
+        st.info("Nenhum dado disponível para exibir o gráfico.", icon="ℹ️")
 
-    st.dataframe(chart_data,hide_index=True)
+    else:
+        st.altair_chart(chart, use_container_width=True)
+
+        st.dataframe(chart_data, hide_index=True)
